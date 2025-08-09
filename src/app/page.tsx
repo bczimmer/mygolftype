@@ -33,7 +33,7 @@ export default function LandingPage() {
             Find your perfect playing partners and unlock your potential on the course
           </p>
           <p className="text-lg text-gray-600">
-            Join 10,000+ golfers who've discovered their type
+            <p>Join 10,000+ golfers who&apos;ve discovered their type</p>
           </p>
         </div>
 

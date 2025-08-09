@@ -7,7 +7,6 @@ const GolfPersonalityTest = () => {
   const [answers, setAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
   const [personalityType, setPersonalityType] = useState('');
-  const [showCompatibility, setShowCompatibility] = useState(false);
 
   const questions = [
     // Social Energy Questions (1-8)
@@ -571,7 +570,6 @@ const calculatePersonality = (allAnswers: Record<number, string>) => {
     setAnswers({});
     setShowResults(false);
     setPersonalityType('');
-    setShowCompatibility(false);
   };
 
   if (showResults) {
