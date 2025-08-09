@@ -30,7 +30,7 @@ const GolfPersonalityTest = () => {
         { text: 'Quietly retrieve your ball', value: 'F' },
         { text: 'High-five everyone in reach', value: 'C' },
         { text: 'Smile and accept congratulations', value: 'F' },
-        { text: 'Tell the story at the next tee', value: 'C' }
+        { text: 'Celebrate and save this gem for story time', value: 'C' }
       ]
     },
     {
