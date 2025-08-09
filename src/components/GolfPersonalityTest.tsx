@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { ChevronRight, ChevronLeft, Trophy, Users, Zap, Brain, Target, Music, Beer, Clock, DollarSign } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 
 const GolfPersonalityTest = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -369,7 +369,17 @@ const GolfPersonalityTest = () => {
   ];
 
   // Simplified personality descriptions for brevity
-  const personalityDescriptions = {
+  type PersonalityKey = 'CIUC' | 'CIUR' | 'CIDC' | 'CIDR' | 'CCUC' | 'CCUR' | 'CCDC' | 'CCDR' | 'FIUC' | 'FIUR' | 'FIDC' | 'FIDR' | 'FCUC' | 'FCUR' | 'FCDC' | 'FCDR';
+ 
+  const personalityDescriptions: Record<PersonalityKey, {
+  name: string;
+  description: string;
+  motto: string;
+  strengths: string[];
+  challenges: string[];
+  bestWith: string[];
+  avoidWith: string[];
+}> = {
     'CIUC': {
       name: 'The Social Striker',
       description: 'Lives for the Saturday morning game with stakes. Makes friends easily but wants to take their money.',
@@ -516,7 +526,7 @@ const GolfPersonalityTest = () => {
     }
   };
 
-  const handleAnswer = (value) => {
+  const handleAnswer = (value: string) => {
     const newAnswers = { ...answers, [currentQuestion]: value };
     setAnswers(newAnswers);
     
@@ -527,30 +537,30 @@ const GolfPersonalityTest = () => {
     }
   };
 
-  const calculatePersonality = (allAnswers) => {
-    const counts = {
-      social: { C: 0, F: 0 },
-      processing: { I: 0, C: 0 },
-      pace: { U: 0, D: 0 },
-      purpose: { C: 0, R: 0 }
-    };
-
-    questions.slice(0, 32).forEach((q, index) => {
-      const answer = allAnswers[index];
-      if (answer && counts[q.category] && counts[q.category][answer] !== undefined) {
-        counts[q.category][answer]++;
-      }
-    });
-
-    const social = counts.social.C >= 5 ? 'C' : 'F';
-    const processing = counts.processing.I >= 5 ? 'I' : 'C';
-    const pace = counts.pace.U >= 5 ? 'U' : 'D';
-    const purpose = counts.purpose.C >= 5 ? 'C' : 'R';
-
-    const type = social + processing + pace + purpose;
-    setPersonalityType(type);
-    setShowResults(true);
+const calculatePersonality = (allAnswers: Record<number, string>) => {
+  const counts: Record<string, Record<string, number>> = {
+    social: { C: 0, F: 0 },
+    processing: { I: 0, C: 0 },
+    pace: { U: 0, D: 0 },
+    purpose: { C: 0, R: 0 }
   };
+
+  questions.slice(0, 32).forEach((q, index) => {
+    const answer = allAnswers[index];
+    if (answer && counts[q.category] && counts[q.category][answer] !== undefined) {
+      counts[q.category][answer]++;
+    }
+  });
+
+  const social = counts.social.C >= 5 ? 'C' : 'F';
+  const processing = counts.processing.I >= 5 ? 'I' : 'C';
+  const pace = counts.pace.U >= 5 ? 'U' : 'D';
+  const purpose = counts.purpose.C >= 5 ? 'C' : 'R';
+
+  const type = social + processing + pace + purpose;
+  setPersonalityType(type);
+  setShowResults(true);
+};
 
   const getProgress = () => {
     return ((currentQuestion + 1) / questions.length) * 100;
@@ -565,7 +575,7 @@ const GolfPersonalityTest = () => {
   };
 
   if (showResults) {
-    const description = personalityDescriptions[personalityType] || personalityDescriptions['CIUC'];
+    const description = personalityDescriptions[personalityType as PersonalityKey] || personalityDescriptions['CIUC'];
     
     return (
       <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
@@ -573,7 +583,7 @@ const GolfPersonalityTest = () => {
           <h1 className="text-4xl font-bold text-green-700 mb-2">Your Golf Personality</h1>
           <div className="text-6xl font-bold text-green-600 mb-4">{personalityType}</div>
           <h2 className="text-2xl font-semibold text-gray-800 mb-2">{description.name}</h2>
-          <p className="text-xl italic text-gray-600">"{description.motto}"</p>
+          <p className="text-xl italic text-gray-600">&quot;{description.motto}&quot;</p>
         </div>
 
         <div className="bg-green-50 p-6 rounded-lg mb-6">
@@ -584,7 +594,7 @@ const GolfPersonalityTest = () => {
           <div className="bg-blue-50 p-4 rounded-lg">
             <h3 className="font-semibold text-blue-900 mb-3">Your Strengths</h3>
             <ul className="space-y-2">
-              {description.strengths.map((strength, idx) => (
+              {description.strengths.map((strength: string, idx: number) => (
                 <li key={idx} className="text-gray-700">✓ {strength}</li>
               ))}
             </ul>
@@ -593,7 +603,7 @@ const GolfPersonalityTest = () => {
           <div className="bg-orange-50 p-4 rounded-lg">
             <h3 className="font-semibold text-orange-900 mb-3">Watch Out For</h3>
             <ul className="space-y-2">
-              {description.challenges.map((challenge, idx) => (
+              {description.challenges.map((challenge: string, idx: number) => (
                 <li key={idx} className="text-gray-700">! {challenge}</li>
               ))}
             </ul>
