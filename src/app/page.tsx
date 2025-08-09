@@ -1,3 +1,9 @@
+import GolfPersonalityTest from '@/components/GolfPersonalityTest';
+
 export default function Home() {
-  return <h1>Hello World Test!</h1>;
+  return (
+    <main className="min-h-screen bg-gray-100 py-8">
+      <GolfPersonalityTest />
+    </main>
+  );
 }
