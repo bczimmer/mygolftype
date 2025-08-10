@@ -1,24 +1,73 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
 
 export default function LandingPage() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const router = useRouter();
+
+// Test function - add temporarily  
+const testSupabase = async () => {
+  console.log('Testing Supabase connection...');
+  try {
+    const { data, error } = await supabase.from('users').select('count');
+    console.log('Connection test result:', { data, error });
+  } catch (err) {
+    console.log('Connection error:', err);
+  }
+};
+
+// Add this right after testSupabase function
+useEffect(() => {
+  testSupabase();
+}, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError('');
 
-    // TODO: Save email to database
-    console.log('Capturing email:', { email, name });
-    
-    // For now, just redirect to assessment
-    setTimeout(() => {
-      router.push('/assessment');
-    }, 500);
+    try {
+      // Save email to Supabase database
+      const { data, error: supabaseError } = await supabase
+        .from('users')
+        .insert([
+          {
+            email: email.toLowerCase().trim(),
+            first_name: name.trim(),
+          }
+        ])
+        .select();
+
+      if (supabaseError) {
+        // Handle duplicate email error gracefully
+        if (supabaseError.code === '23505') {
+          console.log('Email already exists, proceeding to assessment');
+        } else {
+          throw supabaseError;
+        }
+      }
+
+      console.log('User saved:', data);
+      
+      // Store user info in sessionStorage for the assessment
+      sessionStorage.setItem('userEmail', email.toLowerCase().trim());
+      sessionStorage.setItem('userName', name.trim());
+      
+      // Redirect to assessment
+      setTimeout(() => {
+        router.push('/assessment');
+      }, 500);
+
+    } catch (error) {
+      console.error('Error saving user:', error);
+      setError('Something went wrong. Please try again.');
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -33,7 +82,7 @@ export default function LandingPage() {
             Find your perfect playing partners and unlock your potential on the course
           </p>
           <p className="text-lg text-gray-600">
-            <p>Join 10,000+ golfers who&apos;ve discovered their type</p>
+            Join 10,000+ golfers who&apos;ve discovered their type
           </p>
         </div>
 
@@ -68,6 +117,12 @@ export default function LandingPage() {
         <div className="bg-white p-8 rounded-xl shadow-lg max-w-md mx-auto">
           <h2 className="text-2xl font-semibold text-center mb-2">Get Your Free Golf Type</h2>
           <p className="text-gray-600 text-center mb-6">Enter your details to start the assessment</p>
+          
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4">
+              {error}
+            </div>
+          )}
           
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
