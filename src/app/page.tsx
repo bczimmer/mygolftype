@@ -179,7 +179,7 @@ export default function LandingPage() {
             <span>Augusta CC</span>
             <span>Pebble Beach</span>
             <span>TPC Sawgrass</span>
-            <span>Whistling Straits</span>
+            <span>Muirfield</span>
           </div>
         </div>
       </div>
