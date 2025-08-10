@@ -710,7 +710,7 @@ const GolfPersonalityTest = () => {
   }
 
   if (showResults) {
-    const description = personalityDescriptions[personalityType] || personalityDescriptions['CIUC'];
+    const description = personalityDescriptions[personalityType as PersonalityKey] || personalityDescriptions['CIUC'];
     
     return (
       <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
