@@ -585,7 +585,7 @@ const GolfPersonalityTest = () => {
     }
   };
 
-  const saveResponse = async (questionIndex, responseValue) => {
+  const saveResponse = async (questionIndex: number, responseValue: string) => {
     if (!sessionId) return;
 
     try {
@@ -616,7 +616,7 @@ const GolfPersonalityTest = () => {
     }
   };
 
-  const handleAnswer = async (value) => {
+  const handleAnswer = async (value: string) => {
     const newAnswers = { ...answers, [currentQuestion]: value };
     setAnswers(newAnswers);
     
@@ -630,7 +630,7 @@ const GolfPersonalityTest = () => {
     }
   };
 
-  const calculateAndSavePersonality = async (allAnswers) => {
+  const calculateAndSavePersonality = async (allAnswers: Record<number, string>) => {
     const counts = {
       social: { C: 0, F: 0 },
       processing: { I: 0, C: 0 },
