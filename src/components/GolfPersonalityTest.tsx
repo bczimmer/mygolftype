@@ -1,12 +1,19 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronLeft } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
 
 const GolfPersonalityTest = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
   const [personalityType, setPersonalityType] = useState('');
+  
+  // New state for session tracking
+  const [sessionId, setSessionId] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [questionStartTime, setQuestionStartTime] = useState(Date.now());
+  const [isLoading, setIsLoading] = useState(true);
 
   const questions = [
     // Social Energy Questions (1-8)
@@ -525,41 +532,160 @@ const GolfPersonalityTest = () => {
     }
   };
 
-  const handleAnswer = (value: string) => {
+  // Initialize session on component mount
+  useEffect(() => {
+    initializeSession();
+  }, []);
+
+  // Reset question timer when question changes
+  useEffect(() => {
+    setQuestionStartTime(Date.now());
+  }, [currentQuestion]);
+
+  const initializeSession = async () => {
+    try {
+      // Get user data from sessionStorage (set by landing page)
+      const storedUserId = sessionStorage.getItem('userId');
+      const userEmail = sessionStorage.getItem('userEmail');
+      const userName = sessionStorage.getItem('userName');
+      const referrer = sessionStorage.getItem('referrer') || 'direct';
+      const userAgent = sessionStorage.getItem('userAgent') || '';
+      
+      if (!storedUserId) {
+        console.error('No user ID found in session');
+        setIsLoading(false);
+        return;
+      }
+
+      setUserId(storedUserId);
+      
+      // Create new assessment session
+      const { data: sessionData, error: sessionError } = await supabase
+        .from('assessment_sessions')
+        .insert([{
+          user_id: storedUserId,
+          questions_answered: 0,
+          user_agent: userAgent,
+          referrer: referrer
+        }])
+        .select()
+        .single();
+
+      if (sessionError) {
+        throw sessionError;
+      }
+
+      setSessionId(sessionData.session_id);
+      console.log('Assessment session initialized:', sessionData.session_id);
+      setIsLoading(false);
+
+    } catch (error) {
+      console.error('Error initializing session:', error);
+      setIsLoading(false);
+    }
+  };
+
+  const saveResponse = async (questionIndex, responseValue) => {
+    if (!sessionId) return;
+
+    try {
+      const question = questions[questionIndex];
+      const responseTime = Date.now() - questionStartTime;
+      
+      // Save individual response
+      await supabase.from('assessment_responses').insert([{
+        session_id: sessionId,
+        question_id: question.id,
+        question_category: question.category,
+        response_value: responseValue,
+        response_time_ms: responseTime
+      }]);
+      
+      // Update session progress
+      await supabase
+        .from('assessment_sessions')
+        .update({ 
+          questions_answered: questionIndex + 1 
+        })
+        .eq('session_id', sessionId);
+
+      console.log(`Question ${questionIndex + 1} saved: ${responseValue} (${responseTime}ms)`);
+        
+    } catch (error) {
+      console.error('Error saving response:', error);
+    }
+  };
+
+  const handleAnswer = async (value) => {
     const newAnswers = { ...answers, [currentQuestion]: value };
     setAnswers(newAnswers);
+    
+    // Save this response to database
+    await saveResponse(currentQuestion, value);
     
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      calculatePersonality(newAnswers);
+      await calculateAndSavePersonality(newAnswers);
     }
   };
 
-const calculatePersonality = (allAnswers: Record<number, string>) => {
-  const counts: Record<string, Record<string, number>> = {
-    social: { C: 0, F: 0 },
-    processing: { I: 0, C: 0 },
-    pace: { U: 0, D: 0 },
-    purpose: { C: 0, R: 0 }
-  };
+  const calculateAndSavePersonality = async (allAnswers) => {
+    const counts = {
+      social: { C: 0, F: 0 },
+      processing: { I: 0, C: 0 },
+      pace: { U: 0, D: 0 },
+      purpose: { C: 0, R: 0 }
+    };
 
-  questions.slice(0, 32).forEach((q, index) => {
-    const answer = allAnswers[index];
-    if (answer && counts[q.category] && counts[q.category][answer] !== undefined) {
-      counts[q.category][answer]++;
+    questions.slice(0, 32).forEach((q, index) => {
+      const answer = allAnswers[index];
+      if (answer && counts[q.category] && counts[q.category][answer] !== undefined) {
+        counts[q.category][answer]++;
+      }
+    });
+
+    const social = counts.social.C >= 5 ? 'C' : 'F';
+    const processing = counts.processing.I >= 5 ? 'I' : 'C';
+    const pace = counts.pace.U >= 5 ? 'U' : 'D';
+    const purpose = counts.purpose.C >= 5 ? 'C' : 'R';
+
+    const type = social + processing + pace + purpose;
+    setPersonalityType(type);
+
+    // Save completion to database
+    if (sessionId && userId) {
+      try {
+        // Update session as completed
+        await supabase
+          .from('assessment_sessions')
+          .update({
+            completed_at: new Date().toISOString(),
+            personality_type: type,
+            questions_answered: 32
+          })
+          .eq('session_id', sessionId);
+
+        // Save final results
+        await supabase.from('assessment_results').insert([{
+          session_id: sessionId,
+          user_id: userId,
+          personality_type: type,
+          social_score: social,
+          processing_score: processing,
+          pace_score: pace,
+          purpose_score: purpose
+        }]);
+
+        console.log('Assessment completed and saved:', type);
+
+      } catch (error) {
+        console.error('Error saving completion:', error);
+      }
     }
-  });
 
-  const social = counts.social.C >= 5 ? 'C' : 'F';
-  const processing = counts.processing.I >= 5 ? 'I' : 'C';
-  const pace = counts.pace.U >= 5 ? 'U' : 'D';
-  const purpose = counts.purpose.C >= 5 ? 'C' : 'R';
-
-  const type = social + processing + pace + purpose;
-  setPersonalityType(type);
-  setShowResults(true);
-};
+    setShowResults(true);
+  };
 
   const getProgress = () => {
     return ((currentQuestion + 1) / questions.length) * 100;
@@ -570,10 +696,23 @@ const calculatePersonality = (allAnswers: Record<number, string>) => {
     setAnswers({});
     setShowResults(false);
     setPersonalityType('');
+    // Note: We don't reset sessionId here - let them create a new session if they want to retake
   };
 
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Initializing your assessment...</p>
+        </div>
+      </div>
+    );
+  }
+
   if (showResults) {
-    const description = personalityDescriptions[personalityType as PersonalityKey] || personalityDescriptions['CIUC'];
+    const description = personalityDescriptions[personalityType] || personalityDescriptions['CIUC'];
     
     return (
       <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
@@ -592,7 +731,7 @@ const calculatePersonality = (allAnswers: Record<number, string>) => {
           <div className="bg-blue-50 p-4 rounded-lg">
             <h3 className="font-semibold text-blue-900 mb-3">Your Strengths</h3>
             <ul className="space-y-2">
-              {description.strengths.map((strength: string, idx: number) => (
+              {description.strengths.map((strength, idx) => (
                 <li key={idx} className="text-gray-700">✓ {strength}</li>
               ))}
             </ul>
@@ -601,19 +740,34 @@ const calculatePersonality = (allAnswers: Record<number, string>) => {
           <div className="bg-orange-50 p-4 rounded-lg">
             <h3 className="font-semibold text-orange-900 mb-3">Watch Out For</h3>
             <ul className="space-y-2">
-              {description.challenges.map((challenge: string, idx: number) => (
+              {description.challenges.map((challenge, idx) => (
                 <li key={idx} className="text-gray-700">! {challenge}</li>
               ))}
             </ul>
           </div>
         </div>
 
+        {/* Premium Upsell Section */}
+        <div className="bg-gradient-to-r from-green-600 to-green-700 text-white p-6 rounded-lg mb-6">
+          <h3 className="text-2xl font-bold mb-2">Want Your Complete Golf Profile?</h3>
+          <p className="text-green-100 mb-4">
+            Get a comprehensive 25-page report with detailed analysis, course strategy tips, 
+            and perfect playing partner matches for your {description.name} type.
+          </p>
+          <button className="bg-white text-green-700 px-6 py-3 rounded-lg font-semibold hover:bg-green-50 transition">
+            Get Full Report - $19.97
+          </button>
+        </div>
+
         <div className="text-center">
           <button
             onClick={resetTest}
-            className="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition"
+            className="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition mr-4"
           >
             Take Test Again
+          </button>
+          <button className="bg-gray-200 text-gray-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-300 transition">
+            Share Results
           </button>
         </div>
       </div>

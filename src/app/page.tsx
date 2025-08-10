@@ -1,3 +1,4 @@
+
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -16,31 +17,49 @@ export default function LandingPage() {
     setError('');
 
     try {
-      // Save email to Supabase database
-      const { data, error: supabaseError } = await supabase
-        .from('users')
-        .insert([
-          {
-            email: email.toLowerCase().trim(),
-            first_name: name.trim(),
-          }
-        ])
-        .select();
-
-      if (supabaseError) {
-        // Handle duplicate email error gracefully
-        if (supabaseError.code === '23505') {
-          console.log('Email already exists, proceeding to assessment');
-        } else {
-          throw supabaseError;
-        }
-      }
-
-      console.log('User saved:', data);
+      const userEmail = email.toLowerCase().trim();
+      const userName = name.trim();
       
-      // Store user info in sessionStorage for the assessment
-      sessionStorage.setItem('userEmail', email.toLowerCase().trim());
-      sessionStorage.setItem('userName', name.trim());
+      // First, try to find existing user
+      const { data: existingUser } = await supabase
+        .from('users')
+        .select('id')
+        .eq('email', userEmail)
+        .single();
+
+      let userData;
+      
+      if (existingUser) {
+        // User exists, use existing ID
+        userData = existingUser;
+        console.log('Existing user found:', existingUser.id);
+      } else {
+        // Create new user
+        const { data: newUser, error: insertError } = await supabase
+          .from('users')
+          .insert([{
+            email: userEmail,
+            first_name: userName,
+          }])
+          .select()
+          .single();
+
+        if (insertError) {
+          throw insertError;
+        }
+        
+        userData = newUser;
+        console.log('New user created:', newUser.id);
+      }
+      
+      // Store user data for assessment - including the crucial user_id!
+      sessionStorage.setItem('userEmail', userEmail);
+      sessionStorage.setItem('userName', userName);
+      sessionStorage.setItem('userId', userData.id); // ← THE MONEY SHOT!
+      
+      // Track referrer and user agent for analytics
+      sessionStorage.setItem('referrer', document.referrer || 'direct');
+      sessionStorage.setItem('userAgent', navigator.userAgent);
       
       // Redirect to assessment
       setTimeout(() => {
@@ -118,7 +137,7 @@ export default function LandingPage() {
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900 placeholder-gray-500"
                 placeholder="Enter your first name"
                 required
               />
@@ -133,7 +152,7 @@ export default function LandingPage() {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900 placeholder-gray-500"
                 placeholder="Enter your email"
                 required
               />
