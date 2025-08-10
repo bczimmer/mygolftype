@@ -10,8 +10,8 @@ const GolfPersonalityTest = () => {
   const [personalityType, setPersonalityType] = useState('');
   
   // New state for session tracking
-  const [sessionId, setSessionId] = useState(null);
-  const [userId, setUserId] = useState(null);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
   const [questionStartTime, setQuestionStartTime] = useState(Date.now());
   const [isLoading, setIsLoading] = useState(true);
 
