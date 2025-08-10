@@ -546,8 +546,6 @@ const GolfPersonalityTest = () => {
     try {
       // Get user data from sessionStorage (set by landing page)
       const storedUserId = sessionStorage.getItem('userId');
-      const userEmail = sessionStorage.getItem('userEmail');
-      const userName = sessionStorage.getItem('userName');
       const referrer = sessionStorage.getItem('referrer') || 'direct';
       const userAgent = sessionStorage.getItem('userAgent') || '';
       
@@ -631,7 +629,7 @@ const GolfPersonalityTest = () => {
   };
 
   const calculateAndSavePersonality = async (allAnswers: Record<number, string>) => {
-    const counts = {
+    const counts: Record<string, Record<string, number>> = {
       social: { C: 0, F: 0 },
       processing: { I: 0, C: 0 },
       pace: { U: 0, D: 0 },
