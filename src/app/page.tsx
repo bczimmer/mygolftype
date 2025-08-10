@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
@@ -9,22 +9,6 @@ export default function LandingPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
-
-// Test function - add temporarily  
-const testSupabase = async () => {
-  console.log('Testing Supabase connection...');
-  try {
-    const { data, error } = await supabase.from('users').select('count');
-    console.log('Connection test result:', { data, error });
-  } catch (err) {
-    console.log('Connection error:', err);
-  }
-};
-
-// Add this right after testSupabase function
-useEffect(() => {
-  testSupabase();
-}, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
