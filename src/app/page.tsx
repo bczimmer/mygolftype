@@ -23,7 +23,7 @@ export default function LandingPage() {
       // First, try to find existing user
       const { data: existingUser } = await supabase
         .from('users')
-        .select('id')
+        .select('user_id')
         .eq('email', userEmail)
         .single();
 
@@ -33,7 +33,7 @@ let userData;
 if (existingUser) {
   // User exists, use existing ID
   userData = existingUser;
-  console.log('Existing user found:', existingUser.user_id); 
+  console.log('Existing user found:', existingUser.user_id);
 } else {
   // Create new user
   const { data: newUser, error: insertError } = await supabase
