@@ -628,6 +628,43 @@ const GolfPersonalityTest = () => {
     }
   };
 
+const sendResultsEmail = async (personalityType: string, social: string, processing: string, pace: string, purpose: string) => {
+  try {
+    const userEmail = sessionStorage.getItem('userEmail');
+    const userName = sessionStorage.getItem('userName');
+    
+    if (!userEmail) {
+      console.log('No email found in session, skipping email send');
+      return;
+    }
+
+    const description = personalityDescriptions[personalityType as PersonalityKey];
+    
+    const response = await fetch('/api/send-results', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: userEmail,
+        firstName: userName,
+        personalityType: personalityType,
+        personalityName: description?.name || 'Your Golf Type',
+        personalityMotto: description?.motto || ''
+      })
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      console.log('Results email sent successfully:', result.messageId);
+    } else {
+      console.error('Failed to send results email:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Error sending results email:', error);
+  }
+};
+
   const calculateAndSavePersonality = async (allAnswers: Record<number, string>) => {
     const counts: Record<string, Record<string, number>> = {
       social: { C: 0, F: 0 },
@@ -681,6 +718,9 @@ const GolfPersonalityTest = () => {
         console.error('Error saving completion:', error);
       }
     }
+
+// Send results email
+await sendResultsEmail(type, social, processing, pace, purpose);
 
     setShowResults(true);
   };
