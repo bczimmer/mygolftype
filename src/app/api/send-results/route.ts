@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
 
     // Send the assessment results email
     const { data, error } = await resend.emails.send({
-      from: 'MyGolfType <onboarding@resend.dev>', // We'll change this to your domain later
+      from: 'MyGolfType <results@mygolftype.com>', // We'll change this to your domain later
       to: [email],
       subject: `Your Golf Personality: ${personalityName || personalityType}`,
       html: `
