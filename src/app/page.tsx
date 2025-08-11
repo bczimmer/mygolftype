@@ -27,30 +27,31 @@ export default function LandingPage() {
         .eq('email', userEmail)
         .single();
 
-      let userData;
-      
-      if (existingUser) {
-        // User exists, use existing ID
-        userData = existingUser;
-        console.log('Existing user found:', existingUser.id);
-      } else {
-        // Create new user
-        const { data: newUser, error: insertError } = await supabase
-          .from('users')
-          .insert([{
-            email: userEmail,
-            first_name: userName,
-          }])
-          .select()
-          .single();
+     
+let userData;
 
-        if (insertError) {
-          throw insertError;
-        }
-        
-        userData = newUser;
-        console.log('New user created:', newUser.id);
-      }
+if (existingUser) {
+  // User exists, use existing ID
+  userData = existingUser;
+  console.log('Existing user found:', existingUser.user_id); 
+} else {
+  // Create new user
+  const { data: newUser, error: insertError } = await supabase
+    .from('users')
+    .insert([{
+      email: userEmail,
+      first_name: userName,
+    }])
+    .select()
+    .single();
+
+  if (insertError) {
+    throw insertError;
+  }
+  
+  userData = newUser;
+  console.log('New user created:', newUser.user_id);
+}
       
       // Store user data for assessment - including the crucial user_id!
       sessionStorage.setItem('userEmail', userEmail);
