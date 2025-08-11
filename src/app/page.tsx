@@ -55,7 +55,7 @@ export default function LandingPage() {
       // Store user data for assessment - including the crucial user_id!
       sessionStorage.setItem('userEmail', userEmail);
       sessionStorage.setItem('userName', userName);
-      sessionStorage.setItem('userId', userData.id); // ← THE MONEY SHOT!
+      sessionStorage.setItem('userId', userData.user_id); // ← THE MONEY SHOT!
       
       // Track referrer and user agent for analytics
       sessionStorage.setItem('referrer', document.referrer || 'direct');
