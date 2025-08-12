@@ -97,7 +97,7 @@ if (existingUser) {
               1
             </div>
             <h3 className="font-semibold text-gray-800 mb-2">32 Question Assessment</h3>
-            <p className="text-gray-600">Two-minute, scientifically-designed questions about your golf preferences</p>
+            <p className="text-gray-600">A fast, scientifically-designed assessment about your golf preferences</p>
           </div>
           
           <div className="text-center">
