@@ -171,6 +171,9 @@ if (existingUser) {
           <p className="text-xs text-gray-500 text-center mt-4">
             Free assessment • No spam • Unsubscribe anytime
           </p>
+          <p className="text-sm text-gray-600 text-center mt-4">
+  Currently available to US golfers only
+</p>
         </div>
 
         {/* Social Proof */}
