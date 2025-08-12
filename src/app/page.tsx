@@ -96,8 +96,8 @@ if (existingUser) {
             <div className="bg-green-600 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
               1
             </div>
-            <h3 className="font-semibold text-gray-800 mb-2">32 Question Assessment</h3>
-            <p className="text-gray-600">A fast, scientifically-designed assessment about your golf preferences</p>
+            <h3 className="font-semibold text-gray-800 mb-2">Backed by Psychology</h3>
+            <p className="text-gray-600">A fast, 32 question experience, scientifically-designed to uncover your golf personality</p>
           </div>
           
           <div className="text-center">
@@ -105,15 +105,15 @@ if (existingUser) {
               2
             </div>
             <h3 className="font-semibold text-gray-800 mb-2">Instant Results</h3>
-            <p className="text-gray-600">Get your personalized golf type with strengths and playing style insights</p>
+            <p className="text-gray-600">Get your personalized golf type with strengths, compatability, and playing style insights</p>
           </div>
           
           <div className="text-center">
             <div className="bg-green-600 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
               3
             </div>
-            <h3 className="font-semibold text-gray-800 mb-2">Better Golf</h3>
-            <p className="text-gray-600">Find compatible playing partners and improve your on-course experience</p>
+            <h3 className="font-semibold text-gray-800 mb-2">More Enjoyable Golf</h3>
+            <p className="text-gray-600">Improve your on-course experience by finding compatible playing partners, and understanding why you get along</p>
           </div>
         </div>
 
@@ -169,7 +169,7 @@ if (existingUser) {
           </form>
           
           <p className="text-xs text-gray-500 text-center mt-4">
-            Free assessment • No spam • Unsubscribe anytime
+            Free assessment • Immediate Results • Delivered via Email 
           </p>
           <p className="text-sm text-gray-500 text-center mt-4">
   Currently available to US golfers only
@@ -178,13 +178,13 @@ if (existingUser) {
 
         {/* Social Proof */}
         <div className="text-center mt-12">
-          <p className="text-gray-600 mb-4">Trusted by golfers at:</p>
-          <div className="flex justify-center space-x-8 text-gray-500">
-            <span>Augusta CC</span>
-            <span>Pebble Beach</span>
-            <span>TPC Sawgrass</span>
-            <span>Muirfield</span>
-          </div>
+          <p className="text-gray-600 mb-4">Trusted by golfers nationwide:</p>
+          {/* <div className="flex justify-center space-x-8 text-gray-500"> */}
+            {/* <span>Augusta CC</span> */}
+            {/* <span>Pebble Beach</span> */}
+            {/* <span>TPC Sawgrass</span> */}
+            {/* <span>Muirfield</span> */}
+          {/* </div> */}
         </div>
       </div>
     </main>
