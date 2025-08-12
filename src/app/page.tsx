@@ -96,8 +96,8 @@ if (existingUser) {
             <div className="bg-green-600 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
               1
             </div>
-            <h3 className="font-semibold text-gray-800 mb-2">2-Minute, 32 Question Assessment</h3>
-            <p className="text-gray-600">Quick, scientifically-designed questions about your golf preferences</p>
+            <h3 className="font-semibold text-gray-800 mb-2">32 Question Assessment</h3>
+            <p className="text-gray-600">Two-minute, scientifically-designed questions about your golf preferences</p>
           </div>
           
           <div className="text-center">
@@ -171,7 +171,7 @@ if (existingUser) {
           <p className="text-xs text-gray-500 text-center mt-4">
             Free assessment • No spam • Unsubscribe anytime
           </p>
-          <p className="text-sm text-gray-600 text-center mt-4">
+          <p className="text-sm text-gray-500 text-center mt-4">
   Currently available to US golfers only
 </p>
         </div>
