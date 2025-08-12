@@ -793,7 +793,7 @@ await sendResultsEmail(type, social, processing, pace, purpose);
             and perfect playing partner matches for your {description.name} type.
           </p>
           <button className="bg-white text-green-700 px-6 py-3 rounded-lg font-semibold hover:bg-green-50 transition">
-            Get Full Report - $19.97
+            Get Full Report - $9.99
           </button>
         </div>
 

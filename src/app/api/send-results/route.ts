@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
           <div style="background-color: #1f2937; color: white; padding: 20px; border-radius: 8px; text-align: center; margin: 30px 0;">
             <h3 style="color: #22c55e; margin-top: 0;">Want Your Complete Golf Profile?</h3>
             <p style="margin-bottom: 20px;">Get a comprehensive 25-page report with detailed analysis, course strategy tips, and perfect playing partner matches for your ${personalityName} type.</p>
-            <a href="https://mygolftype.com/premium" style="background-color: #22c55e; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Get Full Report - $19.97</a>
+            <a href="https://mygolftype.com/premium" style="background-color: #22c55e; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Get Full Report - $9.99</a>
           </div>
 
           <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; font-size: 14px; color: #6b7280;">
