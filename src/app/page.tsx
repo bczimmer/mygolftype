@@ -179,12 +179,12 @@ if (existingUser) {
         {/* Social Proof */}
         <div className="text-center mt-12">
           <p className="text-gray-600 mb-4">Trusted by golfers nationwide:</p>
-          {/* <div className="flex justify-center space-x-8 text-gray-500"> */}
-            {/* <span>Augusta CC</span> */}
-            {/* <span>Pebble Beach</span> */}
-            {/* <span>TPC Sawgrass</span> */}
-            {/* <span>Muirfield</span> */}
-          {/* </div> */}
+          <div className="flex justify-center space-x-8 text-gray-500">
+            <span>Augusta CC</span>
+            <span>Pebble Beach</span>
+            <span>TPC Sawgrass</span>
+            <span>Muirfield</span>
+          </div>
         </div>
       </div>
     </main>
