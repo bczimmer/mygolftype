@@ -114,7 +114,7 @@ if (existingUser) {
               3
             </div>
             <h3 className="font-semibold text-gray-800 mb-2">More Enjoyable Golf</h3>
-            <p className="text-gray-600">Improve your on-course experience by finding compatible playing partners, and understanding why you get along</p>
+            <p className="text-gray-600">Improve your on-course experience by finding compatible playing partners</p>
           </div>
         </div>
 
