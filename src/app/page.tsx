@@ -178,7 +178,6 @@ if (existingUser) {
         </div>
 
         </div>
-      </div>
       
       {/* Footer */}
       <Footer />
