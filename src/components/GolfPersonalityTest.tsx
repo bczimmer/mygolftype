@@ -33,11 +33,11 @@ const GolfPersonalityTest = () => {
     {
       id: 2,
       category: 'social',
-      question: 'After making a birdie, you:',
+      question: 'After an incredible shot, you:',
       options: [
-        { text: 'Quietly retrieve your ball', value: 'F' },
-        { text: 'High-five everyone in reach', value: 'C' },
-        { text: 'Smile and accept congratulations', value: 'F' },
+        { text: 'Retrieve your ball and smile', value: 'F' },
+        { text: 'High-fives all around', value: 'C' },
+        { text: 'Grin and accept congratulations', value: 'F' },
         { text: 'Celebrate and save this gem for story time', value: 'C' }
       ]
     },
@@ -47,7 +47,7 @@ const GolfPersonalityTest = () => {
       question: 'When paired with strangers, you:',
       options: [
         { text: 'Exchange pleasantries then focus on your game', value: 'F' },
-        { text: 'Learn their life story by hole 5', value: 'C' },
+        { text: 'Try to learn more about them', value: 'C' },
         { text: 'Stick with your usual playing partner', value: 'F' },
         { text: "Make sure everyone's having fun", value: 'C' }
       ]
@@ -58,9 +58,9 @@ const GolfPersonalityTest = () => {
       question: 'Your cart conversation consists of:',
       options: [
         { text: 'Comfortable silence', value: 'F' },
-        { text: 'Non-stop banter', value: 'C' },
-        { text: 'Strategy for the next shot', value: 'F' },
-        { text: 'Work, life, everything but golf', value: 'C' }
+        { text: 'Thoughtful conversation', value: 'C' },
+        { text: 'Strategy and swing observations', value: 'F' },
+        { text: 'Work, life, whatever', value: 'C' }
       ]
     },
     {
@@ -68,8 +68,8 @@ const GolfPersonalityTest = () => {
       category: 'social',
       question: 'At the turn, you prefer to:',
       options: [
-        { text: 'Grab something quick and keep moving', value: 'F' },
-        { text: 'Sit down, order food, socialize', value: 'C' },
+        { text: 'Grab whatever is ready and keep moving', value: 'F' },
+        { text: 'Order food, a drink or two, take a moment', value: 'C' },
         { text: 'Use the bathroom and go', value: 'F' },
         { text: 'Buy a round for the group', value: 'C' }
       ]
@@ -80,8 +80,8 @@ const GolfPersonalityTest = () => {
       question: 'Post-round, you:',
       options: [
         { text: 'Head straight home', value: 'F' },
-        { text: 'Always stay for drinks and stories', value: 'C' },
-        { text: 'Check your stats in the car', value: 'F' },
+        { text: 'Belly up to the bar for drinks and stories', value: 'C' },
+        { text: 'Enter your GHIN stats in the car', value: 'F' },
         { text: "Organize next week's game", value: 'C' }
       ]
     },
@@ -90,10 +90,10 @@ const GolfPersonalityTest = () => {
       category: 'social',
       question: 'When someone asks "what\'d you shoot?":',
       options: [
-        { text: 'Give the number and move on', value: 'F' },
-        { text: 'Provide a hole-by-hole recap', value: 'C' },
-        { text: '"Not my best day" and change subject', value: 'F' },
-        { text: 'Turn it into a conversation', value: 'C' }
+        { text: 'Give them a quick number and move on', value: 'F' },
+        { text: 'Give a number, but add a story or two', value: 'C' },
+        { text: '"Meh, coulda been worse"', value: 'F' },
+        { text: 'Tell them, and ask how they played', value: 'C' }
       ]
     },
     {
@@ -101,10 +101,10 @@ const GolfPersonalityTest = () => {
       category: 'social',
       question: 'Your preferred practice routine:',
       options: [
-        { text: 'Alone with headphones', value: 'F' },
-        { text: 'Make friends at the range', value: 'C' },
-        { text: 'Quick and purposeful', value: 'F' },
-        { text: "Join the regulars' putting contests", value: 'C' }
+        { text: 'An empty range with headphones', value: 'F' },
+        { text: 'Hit a few buckets with friends', value: 'C' },
+        { text: 'Surgical and purposeful', value: 'F' },
+        { text: "Putting contest with whoever is up for it", value: 'C' }
       ]
     },
     // Information Processing Questions (9-16)
@@ -114,9 +114,9 @@ const GolfPersonalityTest = () => {
       question: 'Club selection process:',
       options: [
         { text: 'See the shot, grab the club', value: 'I' },
-        { text: 'Rangefinder, wind, elevation, temperature', value: 'C' },
-        { text: 'Whatever feels right today', value: 'I' },
-        { text: 'Check yardage book notes from last round', value: 'C' }
+        { text: 'Calculate range, wind, elevation, temperature...', value: 'C' },
+        { text: 'Whatever feels right', value: 'I' },
+        { text: 'Pace it off and reference your yardage book', value: 'C' }
       ]
     },
     {
@@ -125,9 +125,9 @@ const GolfPersonalityTest = () => {
       question: 'Reading putts:',
       options: [
         { text: 'See the line immediately', value: 'I' },
-        { text: 'Walk around, use AimPoint, plumb-bob', value: 'C' },
+        { text: 'Survey, Aimpoint, check notes', value: 'C' },
         { text: 'First instinct is usually right', value: 'I' },
-        { text: 'Check from all four sides', value: 'C' }
+        { text: 'Read the putt from at least two sides', value: 'C' }
       ]
     },
     {
@@ -137,7 +137,7 @@ const GolfPersonalityTest = () => {
       options: [
         { text: 'One feeling, maybe none', value: 'I' },
         { text: 'Checkpoint sequence', value: 'C' },
-        { text: '"Smooth" or "easy"', value: 'I' },
+        { text: 'Words like "smooth" or "easy"', value: 'I' },
         { text: 'Specific positions and angles', value: 'C' }
       ]
     },
@@ -147,9 +147,9 @@ const GolfPersonalityTest = () => {
       question: 'When buying new clubs:',
       options: [
         { text: 'Hit them once, know immediately', value: 'I' },
-        { text: 'Launch monitor data decides', value: 'C' },
+        { text: 'Hit a few configurations on the simulator', value: 'C' },
         { text: 'Whatever looks good at address', value: 'I' },
-        { text: 'Spreadsheet comparing all specs', value: 'C' }
+        { text: 'Fall into an internet rabbit hole', value: 'C' }
       ]
     },
     {
@@ -158,9 +158,9 @@ const GolfPersonalityTest = () => {
       question: 'Course strategy:',
       options: [
         { text: "Play what's in front of you", value: 'I' },
-        { text: 'Planned approach before each round', value: 'C' },
-        { text: "Depends on how I'm hitting it", value: 'I' },
-        { text: 'Strokes gained analysis from last time', value: 'C' }
+        { text: 'Execute the play with the highest success probability', value: 'C' },
+        { text: "Changes depending on how I'm hitting it", value: 'I' },
+        { text: 'Make a solid plan and stick to it', value: 'C' }
       ]
     },
     {
@@ -169,9 +169,9 @@ const GolfPersonalityTest = () => {
       question: 'Practice philosophy:',
       options: [
         { text: 'Hit balls until it feels good', value: 'I' },
-        { text: 'Structured drills with measurements', value: 'C' },
-        { text: "Work on whatever's bothering me", value: 'I' },
-        { text: 'Track percentages and patterns', value: 'C' }
+        { text: 'Structured drills - no aimless practice', value: 'C' },
+        { text: "Build a repeatable feeling", value: 'I' },
+        { text: 'Best done with performance data', value: 'C' }
       ]
     },
     {
@@ -182,7 +182,7 @@ const GolfPersonalityTest = () => {
         { text: 'Feels like about one club', value: 'I' },
         { text: '1 mph = 1 yard calculation', value: 'C' },
         { text: 'Watch the trees and guess', value: 'I' },
-        { text: 'Check multiple weather apps', value: 'C' }
+        { text: 'Calculate in quarter club increments', value: 'C' }
       ]
     },
     {
@@ -191,9 +191,9 @@ const GolfPersonalityTest = () => {
       question: 'Learning new shots:',
       options: [
         { text: 'Experiment until it works', value: 'I' },
-        { text: 'YouTube tutorials and slow motion', value: 'C' },
-        { text: 'Copy what I saw someone do', value: 'I' },
-        { text: 'Lesson with launch monitor feedback', value: 'C' }
+        { text: 'Watch YouTube tutorials and slow motion', value: 'C' },
+        { text: 'Copy a move I saw executed well', value: 'I' },
+        { text: 'Get a lesson with launch monitor feedback', value: 'C' }
       ]
     },
     // Pace Questions (17-24)
@@ -238,7 +238,7 @@ const GolfPersonalityTest = () => {
         { text: "Whoever's ready hits", value: 'U' },
         { text: 'Still should follow honors mostly', value: 'D' },
         { text: 'The way golf should be played', value: 'U' },
-        { text: 'Fine if the course is backed up', value: 'D' }
+        { text: 'Fine if we are asked to pick it up', value: 'D' }
       ]
     },
     {
@@ -247,7 +247,7 @@ const GolfPersonalityTest = () => {
       question: 'Looking for a lost ball:',
       options: [
         { text: 'Two minutes max, take the penalty', value: 'U' },
-        { text: 'Use the full time allowed', value: 'D' },
+        { text: 'Use the time allowed', value: 'D' },
         { text: 'Quick look, provisional ready', value: 'U' },
         { text: 'Everyone helps search properly', value: 'D' }
       ]
@@ -282,7 +282,7 @@ const GolfPersonalityTest = () => {
         { text: 'Update after each hole before moving', value: 'D' },
         { text: 'Every few holes when convenient', value: 'U' },
         { text: 'Quick marks, add it up later', value: 'U' },
-        { text: 'Track every stat meticulously', value: 'D' }
+        { text: 'Score, net, fairway, green and putt total', value: 'D' }
       ]
     },
     // Competition Questions (25-32)
@@ -325,8 +325,8 @@ const GolfPersonalityTest = () => {
       question: 'Playing from appropriate tees:',
       options: [
         { text: "Whatever's most fun for everyone", value: 'R' },
-        { text: 'Strict handicap guidelines', value: 'C' },
-        { text: 'Back tees always, need the challenge', value: 'C' },
+        { text: 'I like a challenge', value: 'C' },
+        { text: 'Black tees or Blue tees, minimum', value: 'C' },
         { text: 'Wherever my friends are playing', value: 'R' }
       ]
     },
@@ -338,7 +338,7 @@ const GolfPersonalityTest = () => {
         { text: "That's not a real score then", value: 'C' },
         { text: 'Everyone gets one mulligan', value: 'R' },
         { text: "Not if we're keeping handicap", value: 'C' },
-        { text: "It's supposed to be fun", value: 'R' }
+        { text: "Of course. Let's start the day right", value: 'R' }
       ]
     },
     {
@@ -349,7 +349,7 @@ const GolfPersonalityTest = () => {
         { text: 'Ruins the competition atmosphere', value: 'C' },
         { text: 'Makes it more enjoyable', value: 'R' },
         { text: 'Fine in casual rounds only', value: 'C' },
-        { text: 'The louder the better', value: 'R' }
+        { text: 'Turn. It. Up.', value: 'R' }
       ]
     },
     {
