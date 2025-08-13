@@ -85,7 +85,7 @@ export default function PrivacyPolicy() {
               
               <h3 className="text-xl font-medium text-gray-800 mb-3">All Users</h3>
               <ul className="list-disc pl-6 mb-4 text-gray-700">
-                <li><strong>Access:</strong> Request information about data we collect and how it's used</li>
+                <li><strong>Access:</strong> Request information about data we collect and how it&apos;s used</li>
                 <li><strong>Correction:</strong> Update or correct inaccurate personal information</li>
                 <li><strong>Deletion:</strong> Request removal of your personal information</li>
                 <li><strong>Unsubscribe:</strong> Opt out of marketing emails at any time</li>
