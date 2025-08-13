@@ -390,7 +390,7 @@ const GolfPersonalityTest = () => {
 }> = {
     'CIUC': {
       name: 'The Social Striker',
-      description: 'Lives for the Saturday morning game with stakes. Makes friends easily but wants to take their money.',
+      description: 'The Connecting, Intuitive, Urgent, Competitor',
       motto: 'Ready golf for $20 a side',
       strengths: ['Energizes the group', 'Keeps pace moving', 'Makes golf fun and competitive'],
       challenges: ['May overwhelm quiet players', 'Competition focus might annoy recreators'],
@@ -399,7 +399,7 @@ const GolfPersonalityTest = () => {
     },
     'CIUR': {
       name: 'The Weekend Warrior',
-      description: 'Here for a good time, not a long time. First to suggest music, last to leave the bar.',
+      description: 'The Connecting, Intuitive, Urgent, Recreator',
       motto: 'Saturday fun day!',
       strengths: ['Makes every round enjoyable', 'Never slows down play', 'Great energy'],
       challenges: ['Might annoy serious competitors', 'Can be too loud for some'],
@@ -408,7 +408,7 @@ const GolfPersonalityTest = () => {
     },
     'CIDC': {
       name: 'The Tournament Director',
-      description: 'Organizes the club championships. Knows everyone, plays by feel, takes their time.',
+      description: 'The Connecting, Intuitive, Deliberate, Competitor',
       motto: 'Do it right and enjoy it',
       strengths: ['Natural organizer', 'Balances fun with competition', 'Great at reading people'],
       challenges: ['Can be too structured', 'Pace might frustrate urgent players'],
@@ -417,7 +417,7 @@ const GolfPersonalityTest = () => {
     },
     'CIDR': {
       name: 'The Social Ambassador',
-      description: 'Makes every round a social event. Never rushed, always chatting. Golf is the excuse to hang out.',
+      description: 'The Connecting, Intuitive, Deliberate, Recreator',
       motto: 'No hurry, we are golfing!',
       strengths: ['Creates welcoming atmosphere', 'Remembers everyone', 'Makes golf relaxing'],
       challenges: ['Too slow for many', 'May talk too much for focused players'],
@@ -426,7 +426,7 @@ const GolfPersonalityTest = () => {
     },
     'CCUC': {
       name: 'The Stats Socialite',
-      description: 'Tracks everything, shares with everyone. Rangefinder in one hand, story in the other.',
+      description: 'The Connecting, Calculated, Urgent, Competitor',
       motto: 'According to my Arccos data...',
       strengths: ['Data-driven improvement', 'Helps others with strategy', 'Fast despite calculations'],
       challenges: ['Can over-analyze', 'May bore non-technical players'],
@@ -435,7 +435,7 @@ const GolfPersonalityTest = () => {
     },
     'CCUR': {
       name: 'The Techno Recreator',
-      description: 'Has all the gadgets, none of the pressure. Loves discussing equipment specs.',
+      description: 'The Connecting, Calculated, Urgent, Recreator',
       motto: 'My launch monitor says...',
       strengths: ['Makes technology fun', 'Helpful with equipment', 'Keeps things light'],
       challenges: ['Gadget talk may annoy purists', 'Can get distracted by tech'],
@@ -444,7 +444,7 @@ const GolfPersonalityTest = () => {
     },
     'CCDC': {
       name: 'The Club Champion',
-      description: 'Takes the game seriously but socially. Methodical, measured, but engaging.',
+      description: 'The Connecting, Calculated, Deliberate, Competitor',
       motto: 'Let me show you the proper way',
       strengths: ['Excellent course knowledge', 'Natural teacher', 'Respects the game'],
       challenges: ['Can be pedantic', 'Pace frustrates urgent players'],
@@ -453,7 +453,7 @@ const GolfPersonalityTest = () => {
     },
     'CCDR': {
       name: 'The Teaching Pro Friend',
-      description: 'Loves helping others improve. All the knowledge, none of the pressure.',
+      description: 'The Connecting, Calculated, Deliberate, Recreator',
       motto: 'Have you tried this drill?',
       strengths: ['Generous with knowledge', 'Makes learning fun', 'Very patient'],
       challenges: ['May give too much advice', 'Can slow down play'],
@@ -462,7 +462,7 @@ const GolfPersonalityTest = () => {
     },
     'FIUC': {
       name: 'The Efficient Assassin',
-      description: 'Quiet, fast, deadly. Feels their way to low scores quickly. Minimal talk, maximum efficiency.',
+      description: 'The Focused, Intuitive, Urgent, Competitor',
       motto: 'Nods, hits, walks',
       strengths: ['Never slows play', 'Clutch under pressure', 'Leads by example'],
       challenges: ['Can seem unfriendly', 'May intimidate others'],
@@ -471,7 +471,7 @@ const GolfPersonalityTest = () => {
     },
     'FIUR': {
       name: 'The Zen Speedster',
-      description: 'Plays by feel, quickly, for joy. In their own world but happy. Meditative but efficient.',
+      description: 'The Focused, Intuitive, Urgent, Recreator',
       motto: 'I just love being out here',
       strengths: ['Peaceful presence', 'Never holds up play', 'Pure joy for the game'],
       challenges: ['May seem disconnected', 'Not competitive enough for some'],
@@ -480,7 +480,7 @@ const GolfPersonalityTest = () => {
     },
     'FIDC': {
       name: 'The Feel Player',
-      description: 'Takes time to feel each shot competitively. Quiet intensity, artistic approach.',
+      description: 'The Focused, Intuitive, Deliberate, Competitor',
       motto: 'I need to see it first',
       strengths: ['Great touch around greens', 'Excellent visualization', 'Clutch performer'],
       challenges: ['Can be too slow', 'May overthink shots'],
@@ -489,7 +489,7 @@ const GolfPersonalityTest = () => {
     },
     'FIDR': {
       name: 'The Golf Monk',
-      description: 'Golf as meditation. Slow, quiet, peaceful, content. In no rush to anywhere.',
+      description: 'The Focused, Intuitive, Deliberate, Recreator',
       motto: 'Listen to the course',
       strengths: ['Never rattled', 'Appreciates the game deeply', 'Calming presence'],
       challenges: ['Too slow for many', 'Not social enough for some'],
@@ -498,7 +498,7 @@ const GolfPersonalityTest = () => {
     },
     'FCUC': {
       name: 'The Calculated Assassin',
-      description: 'Efficiency expert with a scorecard. Every number matters, no time to waste.',
+      description: 'The Focused, Calculated, Urgent, Competitor',
       motto: '137 yards, half-club wind, go',
       strengths: ['Extremely precise', 'Fast despite calculations', 'Data-driven success'],
       challenges: ['Can seem robotic', 'May frustrate feel players'],
@@ -507,7 +507,7 @@ const GolfPersonalityTest = () => {
     },
     'FCUR': {
       name: 'The Quick Thinker',
-      description: 'Analyzes everything but doesn\'t stress. Efficient processor playing for fun.',
+      description: 'The Focused, Calculated, Urgent, Recreator',
       motto: 'Interesting data point',
       strengths: ['Makes math fun', 'Efficient without pressure', 'Good pace'],
       challenges: ['May overanalyze', 'Can confuse non-math types'],
@@ -516,7 +516,7 @@ const GolfPersonalityTest = () => {
     },
     'FCDC': {
       name: 'The Grinder',
-      description: 'Maximum focus, maximum analysis. Every shot carefully planned and executed.',
+      description: 'The Focused, Calculated, Deliberate, Competitor',
       motto: 'This putt breaks 3.5 inches',
       strengths: ['Extremely consistent', 'Great under pressure', 'Course management expert'],
       challenges: ['Can slow down play', 'May seem antisocial'],
@@ -525,7 +525,7 @@ const GolfPersonalityTest = () => {
     },
     'FCDR': {
       name: 'The Range Scientist',
-      description: 'Loves perfecting technique alone. Not worried about score, focused on process.',
+      description: 'The Focused, Calculated, Deliberate, Recreator',
       motto: 'Working on something',
       strengths: ['Always improving', 'Very consistent', 'Shares technical knowledge'],
       challenges: ['Can be too technical', 'May lose sight of scoring'],
