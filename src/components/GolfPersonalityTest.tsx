@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, Share, X, Copy, Check, Facebook, Twitter, MessageCircle } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
 const GolfPersonalityTest = () => {
@@ -14,6 +14,8 @@ const GolfPersonalityTest = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const [questionStartTime, setQuestionStartTime] = useState(Date.now());
   const [isLoading, setIsLoading] = useState(true);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
 
   const questions = [
     // Social Energy Questions (1-8)
@@ -628,42 +630,109 @@ const GolfPersonalityTest = () => {
     }
   };
 
-const sendResultsEmail = async (personalityType: string, social: string, processing: string, pace: string, purpose: string) => {
-  try {
-    const userEmail = sessionStorage.getItem('userEmail');
-    const userName = sessionStorage.getItem('userName');
-    
-    if (!userEmail) {
-      console.log('No email found in session, skipping email send');
-      return;
-    }
+  const sendResultsEmail = async (personalityType: string, social: string, processing: string, pace: string, purpose: string) => {
+    try {
+      const userEmail = sessionStorage.getItem('userEmail');
+      const userName = sessionStorage.getItem('userName');
+      
+      if (!userEmail) {
+        console.log('No email found in session, skipping email send');
+        return;
+      }
 
-    const description = personalityDescriptions[personalityType as PersonalityKey];
-    
-    const response = await fetch('/api/send-results', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: userEmail,
-        firstName: userName,
-        personalityType: personalityType,
-        personalityName: description?.name || 'Your Golf Type',
-        personalityMotto: description?.motto || ''
-      })
-    });
+      const description = personalityDescriptions[personalityType as PersonalityKey];
+      
+      const response = await fetch('/api/send-results', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: userEmail,
+          firstName: userName,
+          personalityType: personalityType,
+          personalityName: description?.name || 'Your Golf Type',
+          personalityMotto: description?.motto || ''
+        })
+      });
 
-    if (response.ok) {
-      const result = await response.json();
-      console.log('Results email sent successfully:', result.messageId);
-    } else {
-      console.error('Failed to send results email:', response.statusText);
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Results email sent successfully:', result.messageId);
+      } else {
+        console.error('Failed to send results email:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error sending results email:', error);
     }
-  } catch (error) {
-    console.error('Error sending results email:', error);
-  }
-};
+  };
+
+  // Sharing functions
+  const handleNativeShare = async () => {
+    const description = personalityDescriptions[personalityType as PersonalityKey] || personalityDescriptions['CIUC'];
+    const shareData = {
+      title: `I'm ${personalityType} - ${description.name} | MyGolfType`,
+      text: `Just discovered my golf personality - I'm ${personalityType} (${description.name})! What's yours? Takes 2 minutes to find out!`,
+      url: 'https://mygolftype.com'
+    };
+
+    if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+      try {
+        await navigator.share(shareData);
+        return true;
+      } catch (err) {
+        if (err instanceof Error && err.name !== 'AbortError') {
+  console.log('Error sharing:', err);
+}
+        return false;
+      }
+    }
+    return false;
+  };
+
+  const handleShare = async () => {
+    const shared = await handleNativeShare();
+    if (!shared) {
+      setIsShareModalOpen(true);
+    }
+  };
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText('https://mygolftype.com');
+      setCopiedLink(true);
+      setTimeout(() => setCopiedLink(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
+
+  const shareToFacebook = () => {
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://mygolftype.com')}`;
+    window.open(facebookUrl, '_blank', 'width=600,height=400');
+  };
+
+  const shareToTwitter = () => {
+    const description = personalityDescriptions[personalityType as PersonalityKey] || personalityDescriptions['CIUC'];
+    const text = `Just discovered my golf personality - I'm ${personalityType} (${description.name})! What's yours? Takes 2 minutes to find out! https://mygolftype.com`;
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+    window.open(twitterUrl, '_blank', 'width=600,height=400');
+  };
+
+  const shareToWhatsApp = () => {
+    const description = personalityDescriptions[personalityType as PersonalityKey] || personalityDescriptions['CIUC'];
+    const text = `Just discovered my golf personality - I'm ${personalityType} (${description.name})! What's yours? Takes 2 minutes to find out! https://mygolftype.com`;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
+  const shareToEmail = () => {
+    const description = personalityDescriptions[personalityType as PersonalityKey] || personalityDescriptions['CIUC'];
+    const subject = encodeURIComponent(`What's Your Golf Personality? I'm ${personalityType}!`);
+    const body = encodeURIComponent(`Hey! I just took this cool golf personality assessment and discovered I'm ${personalityType} - ${description.name}.\n\n"${description.motto}"\n\nWhat's your golf personality? Takes just 2 minutes to find out:\nhttps://mygolftype.com`);
+    const emailUrl = `mailto:?subject=${subject}&body=${body}`;
+    window.location.href = emailUrl;
+  };
 
   const calculateAndSavePersonality = async (allAnswers: Record<number, string>) => {
     const counts: Record<string, Record<string, number>> = {
@@ -719,8 +788,8 @@ const sendResultsEmail = async (personalityType: string, social: string, process
       }
     }
 
-// Send results email
-await sendResultsEmail(type, social, processing, pace, purpose);
+    // Send results email
+    await sendResultsEmail(type, social, processing, pace, purpose);
 
     setShowResults(true);
   };
@@ -797,17 +866,105 @@ await sendResultsEmail(type, social, processing, pace, purpose);
           </button>
         </div>
 
-        <div className="text-center">
+        <div className="flex gap-4 justify-center">
           <button
             onClick={resetTest}
             className="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition mr-4"
           >
             Take Test Again
           </button>
-          <button className="bg-gray-200 text-gray-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-300 transition">
+          <button
+            onClick={handleShare}
+            className="bg-gray-200 text-gray-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-300 transition flex items-center gap-2 mx-auto"
+          >
+            <Share size={20} />
             Share Results
           </button>
         </div>
+
+        {/* Share Modal */}
+        {isShareModalOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-xl max-w-md w-full p-6 relative">
+              <button 
+                onClick={() => setIsShareModalOpen(false)}
+                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+              >
+                <X size={24} />
+              </button>
+
+              <div className="mb-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Share MyGolfType</h3>
+                <div className="text-center p-4 bg-green-50 rounded-lg mb-4">
+                  <div className="text-2xl font-bold text-green-600 mb-1">{personalityType}</div>
+                  <div className="text-lg font-semibold text-gray-800">{description.name}</div>
+                  <div className="text-sm text-gray-600 italic">"{description.motto}"</div>
+                </div>
+                <p className="text-gray-600 text-center">Invite others to discover their golf personality!</p>
+              </div>
+
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Share Link
+                </label>
+                <div className="flex gap-2">
+                  <input 
+                    type="text" 
+                    value="https://mygolftype.com"
+                    readOnly
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-sm"
+                  />
+                  <button
+                    onClick={copyToClipboard}
+                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition flex items-center gap-1"
+                  >
+                    {copiedLink ? <Check size={16} /> : <Copy size={16} />}
+                    {copiedLink ? 'Copied!' : 'Copy'}
+                  </button>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <p className="text-sm font-medium text-gray-700 mb-3">Share on social media</p>
+                
+                <button
+                  onClick={shareToFacebook}
+                  className="w-full flex items-center gap-3 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                >
+                  <Facebook size={20} />
+                  Share on Facebook
+                </button>
+
+                <button
+                  onClick={shareToTwitter}
+                  className="w-full flex items-center gap-3 px-4 py-3 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition"
+                >
+                  <Twitter size={20} />
+                  Share on Twitter
+                </button>
+
+                <button
+                  onClick={shareToWhatsApp}
+                  className="w-full flex items-center gap-3 px-4 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+                >
+                  <MessageCircle size={20} />
+                  Share on WhatsApp
+                </button>
+
+                <button
+                  onClick={shareToEmail}
+                  className="w-full flex items-center gap-3 px-4 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                  </svg>
+                  Share via Email
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
