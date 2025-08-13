@@ -23,7 +23,7 @@ export default function PrivacyPolicy() {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-800 mb-4">Introduction</h2>
               <p className="text-gray-700 leading-relaxed">
-                MyGolfType.com ("we," "our," or "us") is committed to protecting your privacy. 
+                MyGolfType.com (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is committed to protecting your privacy. 
                 This Privacy Policy explains how we collect, use, disclose, and safeguard your 
                 information when you visit our website and use our golf personality assessment platform.
               </p>
@@ -165,7 +165,7 @@ export default function PrivacyPolicy() {
               <h2 className="text-2xl font-semibold text-gray-800 mb-4">Changes to This Privacy Policy</h2>
               <p className="text-gray-700 mb-4">
                 We may update this Privacy Policy periodically. Changes will be posted on this page 
-                with an updated "Last Modified" date. For significant changes, we will provide 
+                with an updated &quot;Last Modified&quot; date. For significant changes, we will provide 
                 additional notice through email or website notifications.
               </p>
               
