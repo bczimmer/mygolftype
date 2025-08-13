@@ -630,7 +630,7 @@ const GolfPersonalityTest = () => {
     }
   };
 
-  const sendResultsEmail = async (personalityType: string, social: string, processing: string, pace: string, purpose: string) => {
+  const sendResultsEmail = async (personalityType: string) => {
     try {
       const userEmail = sessionStorage.getItem('userEmail');
       const userName = sessionStorage.getItem('userName');
@@ -789,7 +789,7 @@ const GolfPersonalityTest = () => {
     }
 
     // Send results email
-    await sendResultsEmail(type, social, processing, pace, purpose);
+    await sendResultsEmail(type);
 
     setShowResults(true);
   };
@@ -898,7 +898,7 @@ const GolfPersonalityTest = () => {
                 <div className="text-center p-4 bg-green-50 rounded-lg mb-4">
                   <div className="text-2xl font-bold text-green-600 mb-1">{personalityType}</div>
                   <div className="text-lg font-semibold text-gray-800">{description.name}</div>
-                  <div className="text-sm text-gray-600 italic">"{description.motto}"</div>
+                  <div className="text-sm text-gray-600 italic">&quot;{description.motto}&quot;</div>
                 </div>
                 <p className="text-gray-600 text-center">Invite others to discover their golf personality!</p>
               </div>
