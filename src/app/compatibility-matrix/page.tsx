@@ -68,7 +68,7 @@ export default function CompatibilityMatrix() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="text-center">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              🎯 Golf Personality Compatibility Matrix
+              🎯 POWER PAIRINGS Compatibility Matrix
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Find your perfect playing partners and avoid the foursomes from hell. 
@@ -90,7 +90,7 @@ export default function CompatibilityMatrix() {
             Take our free 5-minute assessment to discover your type and unlock your perfect compatibility matches.
           </p>
           <a 
-            href="/assessment" 
+            href="/" 
             className="inline-block bg-white text-emerald-600 font-bold py-3 px-8 rounded-lg hover:bg-gray-50 transition-colors"
           >
             Take Free Assessment →
