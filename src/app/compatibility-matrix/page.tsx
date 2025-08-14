@@ -1,5 +1,6 @@
 // desktop/mygolftype/src/app/compatibility-matrix/page.tsx
 import { Metadata } from 'next';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Golf Personality Compatibility Matrix | MyGolfType',
@@ -89,12 +90,12 @@ export default function CompatibilityMatrix() {
           <p className="text-emerald-100 mb-4">
             Take our free 5-minute assessment to discover your type and unlock your perfect compatibility matches.
           </p>
-          <a 
+          <Link 
             href="/" 
             className="inline-block bg-white text-emerald-600 font-bold py-3 px-8 rounded-lg hover:bg-gray-50 transition-colors"
           >
             Take Free Assessment →
-          </a>
+          </Link>
         </div>
 
         {/* How to Use Guide */}
@@ -206,18 +207,18 @@ export default function CompatibilityMatrix() {
             plus equipment recommendations and course management tips designed for your exact type.
           </p>
           <div className="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
-            <a 
+            <Link
               href="/assessment" 
               className="inline-block bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors"
             >
               Take Assessment First
-            </a>
-            <a 
+            </Link>
+            <Link 
               href="/premium" 
               className="inline-block border-2 border-white text-white font-bold py-3 px-8 rounded-lg hover:bg-white hover:text-gray-900 transition-colors"
             >
               View Premium Reports
-            </a>
+            </Link>
           </div>
         </div>
 
