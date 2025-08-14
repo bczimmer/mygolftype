@@ -8,7 +8,8 @@ const GolfPersonalityTest = () => {
   const [answers, setAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
   const [personalityType, setPersonalityType] = useState('');
-  
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [isCompleting, setIsCompleting] = useState(false);
   // New state for session tracking
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
@@ -616,7 +617,16 @@ const GolfPersonalityTest = () => {
     }
   };
 
-  const handleAnswer = async (value: string) => {
+const handleAnswer = async (value: string) => {
+  // Prevent double-clicks
+  if (isProcessing) {
+    console.log('Already processing answer, ignoring duplicate click');
+    return;
+  }
+
+  setIsProcessing(true);
+  
+  try {
     const newAnswers = { ...answers, [currentQuestion]: value };
     setAnswers(newAnswers);
     
@@ -625,10 +635,18 @@ const GolfPersonalityTest = () => {
     
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
+      setIsProcessing(false); // Re-enable for next question
     } else {
+      // Final question - prevent any further processing
+      setIsCompleting(true);
       await calculateAndSavePersonality(newAnswers);
+      // Don't reset isProcessing - we're done!
     }
-  };
+  } catch (error) {
+    console.error('Error handling answer:', error);
+    setIsProcessing(false); // Reset on error so user can try again
+  }
+};
 
   const sendResultsEmail = async (personalityType: string) => {
     try {
@@ -987,19 +1005,34 @@ const GolfPersonalityTest = () => {
           />
         </div>
       </div>
-
+      {currentQuestion === questions.length - 1 && !isCompleting && (
+        <div className="text-center mb-4 p-3 bg-green-50 rounded-lg border border-green-200">
+          <span className="text-green-700 font-medium">
+            🏁 Final Question - Your results are almost ready!
+          </span>
+        </div>
+      )}
       <div className="mb-8">
         <h2 className="text-xl font-semibold text-gray-800 mb-6">{currentQ.question}</h2>
         <div className="space-y-3">
-          {currentQ.options.map((option, idx) => (
-            <button
-              key={idx}
-              onClick={() => handleAnswer(option.value)}
-              className="w-full text-left p-4 bg-gray-50 hover:bg-green-50 rounded-lg transition border-2 border-transparent hover:border-green-300"
-            >
-              <span className="text-gray-700">{option.text}</span>
-            </button>
-          ))}
+
+{currentQ.options.map((option, idx) => (
+  <button
+    key={idx}
+    onClick={() => handleAnswer(option.value)}
+    disabled={isProcessing}
+    className={`w-full text-left p-4 rounded-lg transition border-2 border-transparent 
+      ${isProcessing 
+        ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+        : 'bg-gray-50 hover:bg-green-50 hover:border-green-300'
+      }`}
+  >
+    <span className="text-gray-700">{option.text}</span>
+    {isProcessing && currentQuestion === questions.length - 1 && (
+      <span className="ml-2 text-green-600">Processing...</span>
+    )}
+  </button>
+))}
         </div>
       </div>
 
