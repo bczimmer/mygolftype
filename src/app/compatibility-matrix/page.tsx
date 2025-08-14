@@ -36,7 +36,7 @@ export default function CompatibilityMatrix() {
         {/* CTA Banner - Don't know your type? */}
         <div className="bg-emerald-600 rounded-xl p-6 mb-8 text-center">
           <h2 className="text-2xl font-bold text-white mb-2">
-            Don't Know Your Golf Personality Yet?
+            Don&apos;t Know Your Golf Personality Yet?
           </h2>
           <p className="text-emerald-100 mb-4">
             Take our free 5-minute assessment to discover your type and unlock your perfect compatibility matches.
@@ -169,7 +169,7 @@ export default function CompatibilityMatrix() {
         {/* Social Proof */}
         <div className="text-center mt-12">
           <p className="text-gray-600 mb-4">
-            "This compatibility matrix completely changed how I choose playing partners. No more painful rounds!"
+            &quot;This compatibility matrix completely changed how I choose playing partners. No more painful rounds!&quot;
           </p>
           <p className="text-sm text-gray-500">
             - Sarah M., CCDC (Club Champion), 4.2 handicap
