@@ -295,7 +295,7 @@ Avoid If Possible: ${teaser.dangerZone}
 Want Your Complete Golf Profile?
 Get a comprehensive 25-page report with detailed analysis, course strategy tips, and perfect playing partner matches for your ${teaser.title} type.
 
-LIMITED TIME: $19.99 (normally $49.99)
+LIMITED TIME: $2.99 (normally $9.99)
 
 Get your report: https://mygolftype.com/premium/${personalityType.toLowerCase()}
 
