@@ -213,7 +213,7 @@ export async function POST(request: NextRequest) {
           <div style="background-color: #1f2937; color: white; padding: 20px; border-radius: 8px; text-align: center; margin: 30px 0;">
             <h3 style="color: #22c55e; margin-top: 0;">Want Your Complete Golf Profile?</h3>
             <p style="margin-bottom: 20px;">Get a comprehensive 25-page report with detailed analysis, course strategy tips, and perfect playing partner matches for your ${teaser.title} type.</p>
-            <a href="https://mygolftype.com/premium/${personalityType.toLowerCase()}" style="background-color: #22c55e; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Get Full Report - $19.99</a>
+            <a href="https://mygolftype.com/premium/${personalityType.toLowerCase()}" style="background-color: #22c55e; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">Get Full Report - $2.99</a>
           </div>
 
           <!-- TEASER CONTENT STARTS HERE -->
@@ -244,7 +244,7 @@ export async function POST(request: NextRequest) {
             <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin: 25px 0;">
               <h4 style="color: #92400e; margin-top: 0; font-size: 16px;">⚠️ Limited Time Launch Price</h4>
               <p style="color: #92400e; font-size: 14px; margin: 0;">
-                <span style="text-decoration: line-through;">$49.99</span> → <strong>$19.99</strong>
+                <span style="text-decoration: line-through;">$9.99</span> → <strong>$2.99</strong>
               </p>
             </div>
 
