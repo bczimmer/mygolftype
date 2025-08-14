@@ -11,6 +11,7 @@ export default function LandingPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
+  const [zipCode, setZipCode] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +33,13 @@ export default function LandingPage() {
 let userData;
 
 if (existingUser) {
-  // User exists, use existing ID
+  // User exists, update with new zip code if provided
+  if (zipCode.trim()) {
+    await supabase
+      .from('users')
+      .update({ zip_code: zipCode.trim() })
+      .eq('user_id', existingUser.user_id);
+  }
   userData = existingUser;
   console.log('Existing user found:', existingUser.user_id);
 } else {
@@ -42,6 +49,7 @@ if (existingUser) {
     .insert([{
       email: userEmail,
       first_name: userName,
+      zip_code: zipCode.trim() || null
     }])
     .select()
     .single();
@@ -58,6 +66,7 @@ if (existingUser) {
       sessionStorage.setItem('userEmail', userEmail);
       sessionStorage.setItem('userName', userName);
       sessionStorage.setItem('userId', userData.user_id); // ← THE MONEY SHOT!
+      sessionStorage.setItem('userZipCode', zipCode.trim());
       
       // Track referrer and user agent for analytics
       sessionStorage.setItem('referrer', document.referrer || 'direct');
@@ -130,44 +139,61 @@ if (existingUser) {
           )}
           
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                First Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900 placeholder-gray-500"
-                placeholder="Enter your first name"
-                required
-              />
-            </div>
-            
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                Email Address
-              </label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900 placeholder-gray-500"
-                placeholder="Enter your email"
-                required
-              />
-            </div>
-            
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isLoading ? 'Starting Assessment...' : 'Start My Assessment →'}
-            </button>
-          </form>
+  <div>
+    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+      First Name
+    </label>
+    <input
+      type="text"
+      id="name"
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900 placeholder-gray-500"
+      placeholder="Enter your first name"
+      required
+    />
+  </div>
+  
+  <div>
+    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+      Email Address
+    </label>
+    <input
+      type="email"
+      id="email"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900 placeholder-gray-500"
+      placeholder="Enter your email"
+      required
+    />
+  </div>
+
+  <div>
+    <label htmlFor="zipCode" className="block text-sm font-medium text-gray-700 mb-1">
+      Zip Code
+    </label>
+    <input
+      type="text"
+      id="zipCode"
+      value={zipCode}
+      onChange={(e) => setZipCode(e.target.value)}
+      pattern="[0-9]{5}(-[0-9]{4})?"
+      maxLength={10}
+      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900 placeholder-gray-500"
+      placeholder="12345"
+      required
+    />
+  </div>
+  
+  <button
+    type="submit"
+    disabled={isLoading}
+    className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+  >
+    {isLoading ? 'Starting Assessment...' : 'Start My Assessment →'}
+  </button>
+</form>
           
           <p className="text-xs text-gray-500 text-center mt-4">
             Free assessment • Immediate Results • Delivered via Email 
