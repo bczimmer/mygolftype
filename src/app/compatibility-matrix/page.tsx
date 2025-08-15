@@ -1,6 +1,11 @@
+// desktop/mygolftype/src/app/compatibility-matrix/page.tsx
 'use client';
-import { useState } from 'react';
+import { Metadata } from 'next';
 import Link from 'next/link';
+import { useState } from 'react';
+
+// Note: Remove the metadata export since this is now a client component
+// You'll need to add metadata in a layout.tsx or move it to a parent server component
 
 // JavaScript variables and functions go HERE (outside the component)
 const personalityTypes = [
@@ -50,7 +55,7 @@ function getCompatibilityClass(score: number): string {
   return 'bg-red-200 text-red-800';
 }
 
-export default function CompatibilityMatrixClient() {
+export default function CompatibilityMatrix() {
   const [selectedType, setSelectedType] = useState<string>('');
 
   // Get compatibility data for selected type, sorted by score
@@ -68,160 +73,266 @@ export default function CompatibilityMatrixClient() {
   const compatibilityData = getCompatibilityForType(selectedType);
 
   return (
-    <>
-      {/* DESKTOP: Full Matrix Table */}
-      <div className="hidden lg:block">
-        <div className="bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-xs sm:text-sm min-w-[1200px]">
-              <thead>
-                <tr>
-                  <th className="bg-emerald-600 text-white p-2 sm:p-3 font-bold text-center sticky left-0 z-20"></th>
-                  {personalityTypes.map((type) => (
-                    <th key={type.code} className="bg-emerald-600 text-white p-1 sm:p-2 font-bold text-center min-w-[100px] relative">
-                      <div className="whitespace-nowrap">
-                        <div className="font-bold text-xs">{type.code}</div>
-                        <div className="text-xs opacity-90 mt-1">{type.name.split(' ').map(word => word.charAt(0)).join('')}</div>
-                      </div>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {personalityTypes.map((rowType) => (
-                  <tr key={rowType.code}>
-                    <td className="bg-emerald-600 text-white p-2 sm:p-3 font-bold text-center sticky left-0 z-10 min-w-[120px]">
-                      <div className="text-sm font-bold">{rowType.code}</div>
-                      <div className="text-xs opacity-90">{rowType.name}</div>
-                    </td>
-                    {personalityTypes.map((colType) => {
-                      const score = compatibilityMatrix[rowType.code][colType.code];
-                      return (
-                        <td
-                          key={colType.code}
-                          className={`text-center p-2 border border-gray-200 font-bold text-xs ${getCompatibilityClass(score)}`}
-                        >
-                          {score}%
-                        </td>
-                      );
-                    })}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          
-          {/* Legend */}
-          <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm">
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-green-200 rounded border"></div>
-              <span>85-100%: Dream Pairing</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-green-300 rounded border"></div>
-              <span>70-84%: Great Match</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-yellow-200 rounded border"></div>
-              <span>50-69%: Good Compatibility</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-red-200 rounded border"></div>
-              <span>Below 50%: Challenging</span>
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50">
+      {/* Header Section */}
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              🎯 Golf Personality Compatibility Matrix
+            </h1>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Find your perfect playing partners and avoid the foursomes from hell. 
+              Our research-based compatibility matrix shows you exactly who complements your golf personality.
+            </p>
           </div>
         </div>
       </div>
 
-      {/* MOBILE/TABLET: Type Selector + Sorted Results */}
-      <div className="lg:hidden">
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">
-            Find Your Perfect Playing Partners
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        {/* Desktop CTA Banner - Don't know your type? */}
+        <div className="hidden lg:block bg-emerald-600 rounded-xl p-6 mb-8 text-center">
+          <h2 className="text-2xl font-bold text-white mb-2">
+            Don&apos;t Know Your Golf Personality Yet?
           </h2>
-          
-          {/* Type Selector */}
-          <div className="mb-6">
-            <label htmlFor="type-select" className="block text-sm font-medium text-gray-700 mb-2">
-              Select Your Golf Personality Type:
-            </label>
-            <select
-              id="type-select"
-              value={selectedType}
-              onChange={(e) => setSelectedType(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-            >
-              <option value="">Choose your type...</option>
-              {personalityTypes.map((type) => (
-                <option key={type.code} value={type.code}>
-                  {type.code} - {type.name}
-                </option>
-              ))}
-            </select>
-          </div>
+          <p className="text-emerald-100 mb-4">
+            Take our free 5-minute assessment to discover your type and unlock your perfect compatibility matches.
+          </p>
+          <Link 
+            href="/" 
+            className="inline-block bg-white text-emerald-600 font-bold py-3 px-8 rounded-lg hover:bg-gray-50 transition-colors"
+          >
+            Take Free Assessment →
+          </Link>
+        </div>
 
-          {/* Don't know your type CTA */}
-          {!selectedType && (
-            <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 mb-6">
-              <p className="text-emerald-800 font-medium mb-2">Don&apos;t know your type yet?</p>
+        {/* Desktop How to Use Guide */}
+        <div className="hidden lg:block bg-white rounded-xl shadow-lg p-8 mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">How to Use This Matrix</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-3">Reading Your Compatibility</h3>
+              <ul className="space-y-2 text-gray-600">
+                <li className="flex items-center">
+                  <div className="w-4 h-4 bg-green-200 rounded mr-3"></div>
+                  <span><strong>85-100%:</strong> Dream Pairing - Book every weekend together</span>
+                </li>
+                <li className="flex items-center">
+                  <div className="w-4 h-4 bg-green-300 rounded mr-3"></div>
+                  <span><strong>70-84%:</strong> Great Match - Will enjoy regular rounds</span>
+                </li>
+                <li className="flex items-center">
+                  <div className="w-4 h-4 bg-yellow-200 rounded mr-3"></div>
+                  <span><strong>50-69%:</strong> Good Compatibility - Fine for casual rounds</span>
+                </li>
+                <li className="flex items-center">
+                  <div className="w-4 h-4 bg-red-200 rounded mr-3"></div>
+                  <span><strong>Below 50%:</strong> Challenging - Someone will have a bad time</span>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-3">Finding Your Matches</h3>
+              <ol className="space-y-2 text-gray-600 list-decimal list-inside">
+                <li>Find your personality type on the left column</li>
+                <li>Look across the row to see compatibility scores</li>
+                <li>Higher percentages = better on-course chemistry</li>
+                <li>Use this to recruit or avoid specific types</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        {/* DESKTOP: Full Matrix Table */}
+        <div className="hidden lg:block">
+          <div className="bg-white rounded-xl shadow-lg p-4 sm:p-8 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-xs sm:text-sm min-w-[1200px]">
+                <thead>
+                  <tr>
+                    <th className="bg-emerald-600 text-white p-2 sm:p-3 font-bold text-center sticky left-0 z-20"></th>
+                    {personalityTypes.map((type) => (
+                      <th key={type.code} className="bg-emerald-600 text-white p-1 sm:p-2 font-bold text-center min-w-[100px] relative">
+                        <div className="whitespace-nowrap">
+                          <div className="font-bold text-xs">{type.code}</div>
+                          <div className="text-xs opacity-90 mt-1">{type.name.split(' ').map(word => word.charAt(0)).join('')}</div>
+                        </div>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {personalityTypes.map((rowType) => (
+                    <tr key={rowType.code}>
+                      <td className="bg-emerald-600 text-white p-2 sm:p-3 font-bold text-center sticky left-0 z-10 min-w-[120px]">
+                        <div className="text-sm font-bold">{rowType.code}</div>
+                        <div className="text-xs opacity-90">{rowType.name}</div>
+                      </td>
+                      {personalityTypes.map((colType) => {
+                        const score = compatibilityMatrix[rowType.code][colType.code];
+                        return (
+                          <td
+                            key={colType.code}
+                            className={`text-center p-2 border border-gray-200 font-bold text-xs ${getCompatibilityClass(score)}`}
+                          >
+                            {score}%
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            
+            {/* Legend */}
+            <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm">
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-green-200 rounded border"></div>
+                <span>85-100%: Dream Pairing</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-green-300 rounded border"></div>
+                <span>70-84%: Great Match</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-yellow-200 rounded border"></div>
+                <span>50-69%: Good Compatibility</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-red-200 rounded border"></div>
+                <span>Below 50%: Challenging</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* MOBILE/TABLET: Type Selector + Sorted Results */}
+        <div className="lg:hidden">
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">
+              Find Your Perfect Playing Partners
+            </h2>
+            
+            {/* Type Selector */}
+            <div className="mb-6">
+              <label htmlFor="type-select" className="block text-sm font-medium text-gray-700 mb-2">
+                Select Your Golf Personality Type:
+              </label>
+              <select
+                id="type-select"
+                value={selectedType}
+                onChange={(e) => setSelectedType(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              >
+                <option value="">Choose your type...</option>
+                {personalityTypes.map((type) => (
+                  <option key={type.code} value={type.code}>
+                    {type.code} - {type.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Mobile Condensed CTA - Always show */}
+            <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 mb-6 text-center">
+              <p className="text-emerald-800 font-medium mb-3">Don&apos;t Know Your Golf Personality Yet?</p>
               <Link 
                 href="/" 
-                className="inline-block bg-emerald-600 text-white font-bold py-2 px-4 rounded hover:bg-emerald-700 transition-colors"
+                className="inline-block bg-emerald-600 text-white font-bold py-2 px-6 rounded hover:bg-emerald-700 transition-colors"
               >
                 Take Free Assessment →
               </Link>
             </div>
-          )}
 
-          {/* Compatibility Results */}
-          {selectedType && compatibilityData.length > 0 && (
-            <div>
-              <h3 className="text-lg font-bold text-gray-900 mb-4">
-                Your Compatibility Matches (Best to Worst)
-              </h3>
-              <div className="space-y-2">
-                {compatibilityData.map((match) => (
-                  <div
-                    key={match.code}
-                    className={`flex justify-between items-center p-3 rounded-lg border ${getCompatibilityClass(match.score)} ${
-                      match.code === selectedType ? 'ring-2 ring-gray-800' : ''
-                    }`}
-                  >
-                    <div className="flex-1">
-                      <div className="font-bold text-sm">
-                        {match.code}
-                        {match.code === selectedType && ' (You)'}
+            {/* Compatibility Results */}
+            {selectedType && compatibilityData.length > 0 && (
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-4">
+                  Your Compatibility Matches (Best to Worst)
+                </h3>
+                <div className="space-y-2">
+                  {compatibilityData.map((match) => (
+                    <div
+                      key={match.code}
+                      className={`flex justify-between items-center p-3 rounded-lg border ${getCompatibilityClass(match.score)} ${
+                        match.code === selectedType ? 'ring-2 ring-gray-800' : ''
+                      }`}
+                    >
+                      <div className="flex-1">
+                        <div className="font-bold text-sm">
+                          {match.code}
+                          {match.code === selectedType && ' (You)'}
+                        </div>
+                        <div className="text-xs opacity-75">
+                          {match.name}
+                        </div>
                       </div>
-                      <div className="text-xs opacity-75">
-                        {match.name}
+                      <div className="font-bold text-lg ml-4">
+                        {match.score}%
                       </div>
                     </div>
-                    <div className="font-bold text-lg ml-4">
-                      {match.score}%
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
 
-              {/* Quick insights */}
-              <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                <h4 className="font-bold text-gray-900 mb-2">Quick Insights:</h4>
-                <div className="space-y-1 text-sm text-gray-600">
-                  <div>
-                    🎯 <strong>Best Match:</strong> {compatibilityData[1]?.name} ({compatibilityData[1]?.score}%)
-                  </div>
-                  <div>
-                    ⚠️ <strong>Avoid:</strong> {compatibilityData[compatibilityData.length - 1]?.name} ({compatibilityData[compatibilityData.length - 1]?.score}%)
-                  </div>
-                  <div>
-                    📊 <strong>Great Matches (85%+):</strong> {compatibilityData.filter(m => m.score >= 85 && m.code !== selectedType).length} types
+                {/* Quick insights */}
+                <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                  <h4 className="font-bold text-gray-900 mb-2">Quick Insights:</h4>
+                  <div className="space-y-1 text-sm text-gray-600">
+                    <div>
+                      🎯 <strong>Best Match:</strong> {compatibilityData[1]?.name} ({compatibilityData[1]?.score}%)
+                    </div>
+                    <div>
+                      ⚠️ <strong>Avoid:</strong> {compatibilityData[compatibilityData.length - 1]?.name} ({compatibilityData[compatibilityData.length - 1]?.score}%)
+                    </div>
+                    <div>
+                      📊 <strong>Great Matches (85%+):</strong> {compatibilityData.filter(m => m.score >= 85 && m.code !== selectedType).length} types
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
+
+        {/* Bottom CTA */}
+        <div className="bg-gray-900 rounded-xl p-8 mt-12 text-center">
+          <h2 className="text-3xl font-bold text-white mb-4">
+            Want Detailed Compatibility Strategies?
+          </h2>
+          <p className="text-gray-300 text-lg mb-6 max-w-2xl mx-auto">
+            Get your personalized 25-page Premium Report with specific strategies for playing with each personality type, 
+            plus equipment recommendations and course management tips designed for your exact type.
+          </p>
+          <div className="space-y-4 sm:space-y-0 sm:space-x-4 sm:flex sm:justify-center">
+            <Link
+              href="/assessment" 
+              className="inline-block bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors"
+            >
+              Take Assessment First
+            </Link>
+            <Link 
+              href="/premium" 
+              className="inline-block border-2 border-white text-white font-bold py-3 px-8 rounded-lg hover:bg-white hover:text-gray-900 transition-colors"
+            >
+              View Premium Reports
+            </Link>
+          </div>
+        </div>
+
+        {/* Social Proof */}
+        <div className="text-center mt-12">
+          <p className="text-gray-600 mb-4">
+            &quot;This compatibility matrix completely changed how I choose playing partners. No more painful rounds!&quot;
+          </p>
+          <p className="text-sm text-gray-500">
+            - Sarah M., CCDC (Club Champion), 4.2 handicap
+          </p>
+        </div>
+
       </div>
-    </>
+    </div>
   );
 }
