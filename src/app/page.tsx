@@ -149,7 +149,7 @@ if (existingUser) {
       value={name}
       onChange={(e) => setName(e.target.value)}
       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900 placeholder-gray-500"
-      placeholder="Enter your first name"
+      placeholder="Your first name"
       required
     />
   </div>
@@ -164,7 +164,7 @@ if (existingUser) {
       value={email}
       onChange={(e) => setEmail(e.target.value)}
       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900 placeholder-gray-500"
-      placeholder="Enter your email"
+      placeholder="Send results to"
       required
     />
   </div>
@@ -181,7 +181,7 @@ if (existingUser) {
       pattern="[0-9]{5}(-[0-9]{4})?"
       maxLength={10}
       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900 placeholder-gray-500"
-      placeholder="12345"
+      placeholder="Where do you golf?"
       required
     />
   </div>
