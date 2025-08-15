@@ -180,7 +180,7 @@ export default function CompatibilityMatrixClient() {
                 Your Compatibility Matches (Best to Worst)
               </h3>
               <div className="space-y-2">
-                {compatibilityData.map((match, index) => (
+                {compatibilityData.map((match) => (
                   <div
                     key={match.code}
                     className={`flex justify-between items-center p-3 rounded-lg border ${getCompatibilityClass(match.score)} ${
