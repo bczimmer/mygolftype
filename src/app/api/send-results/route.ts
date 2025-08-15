@@ -172,11 +172,12 @@ export async function POST(request: NextRequest) {
             <strong>Your Best Match:</strong> ${teaser.powerPairing}<br>
             <strong>Avoid If Possible:</strong> ${teaser.dangerZone}
           </p>
-          <p style="margin: 15px 0 0 0; font-size: 12px; color: #6b7280;">
-            <a href="https://mygolftype.com/compatibility-matrix" style="color: #22c55e; text-decoration: none;">
-              → View Complete 16x16 Compatibility Matrix
-            </a>
-          </p>
+<div style="margin: 15px 0 0 0; text-align: center;">
+  <a href="https://mygolftype.com/compatibility-matrix" 
+     style="background-color: #22c55e; color: white; padding: 8px 16px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 12px; display: inline-block;">
+    View Full Compatibility Matrix
+  </a>
+</div>
         </div>
       </div>
     `;
