@@ -37,8 +37,8 @@ export default function Footer({ className = '' }: FooterProps) {
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-green-100 hover:text-white transition-colors">
-                  About Golf Types
+                <Link href="/compatibility-matrix" className="text-green-100 hover:text-white transition-colors">
+                  About Golf Type Compatibility
                 </Link>
               </li>
               <li>
