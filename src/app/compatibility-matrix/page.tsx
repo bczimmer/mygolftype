@@ -163,7 +163,7 @@ export default function CompatibilityMatrixClient() {
           {/* Don't know your type CTA */}
           {!selectedType && (
             <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 mb-6">
-              <p className="text-emerald-800 font-medium mb-2">Don't know your type yet?</p>
+              <p className="text-emerald-800 font-medium mb-2">Don&apos;t know your type yet?</p>
               <Link 
                 href="/" 
                 className="inline-block bg-emerald-600 text-white font-bold py-2 px-4 rounded hover:bg-emerald-700 transition-colors"
