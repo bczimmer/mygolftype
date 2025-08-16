@@ -4,6 +4,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "MyGolfType - Golf Personality Assessment",
   description: "Discover your golf personality type",
+  icons: {
+    icon: 'favicon.svg',
+  }
 };
 
 export default function RootLayout({
