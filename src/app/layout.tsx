@@ -5,8 +5,12 @@ export const metadata: Metadata = {
   title: "MyGolfType - Golf Personality Assessment",
   description: "Discover your golf personality type",
   icons: {
-    icon: 'favicon.svg',
-  }
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: '32x32' }
+    ],
+  },
+  themeColor: '#22c55e',
 };
 
 export default function RootLayout({
