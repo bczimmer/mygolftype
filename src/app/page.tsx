@@ -96,7 +96,7 @@ if (existingUser) {
             Find your perfect playing partners and unlock your potential on the course
           </p>
           <p className="text-lg text-gray-600">
-            Join 10,000+ golfers who&apos;ve discovered their type
+            &quot; Your Golf Buddies are Out There &quot;
           </p>
         </div>
 
