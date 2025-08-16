@@ -81,7 +81,7 @@ export default function CompatibilityMatrix() {
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
               🎯 Golf Personality Compatibility Matrix
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto hidden lg:block">
               Find your perfect playing partners and avoid the foursomes from hell. 
               Our research-based compatibility matrix shows you exactly who complements your golf personality.
             </p>
